@@ -25,7 +25,7 @@ public class Sword : MonoBehaviour
         {
             if (shield.transform.root != transform.root)
             {
-                Debug.Log("BLOCKED");
+                //Debug.Log("BLOCKED");
                 hitOpponents.Add(other.transform.root);
                 if (!blocked)
                 {
@@ -45,7 +45,7 @@ public class Sword : MonoBehaviour
 
             other.transform.root.GetComponent<Character>().TakeDamage(dmg);
             hitOpponents.Add(other.transform.root);
-            Debug.Log("Opponent hit!");
+            //Debug.Log("Opponent hit!");
         }
     }
 

@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 3968784102047034656}
   - component: {fileID: 8602563653284938964}
   - component: {fileID: 6892729689017418203}
+  - component: {fileID: 3788340769287357825}
   m_Layer: 8
   m_Name: PlayerMove
   m_TagString: Player
@@ -261,6 +262,29 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!136 &3788340769287357825
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273850509734242938}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &303079532210197494
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +503,7 @@ MonoBehaviour:
   animator: {fileID: 4834673563408347054}
   FPSController: {fileID: 8475846887237785294}
   speedChangeRate: 0.05
+  isEnemy: 0
 --- !u!114 &6593716259671252016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,12 +517,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputs: {fileID: 8602563653284938964}
-  swordCollider: {fileID: 6331178350346168369}
   shieldCollider: {fileID: 1517174469607164516}
-  attackActiveTime: 1.25
   blockActiveTime: 1.4
-  canAttack: 1
   canBlock: 1
+  swordCollider: {fileID: 6331178350346168369}
+  attackActiveTime: 1.25
+  canAttack: 1
+  shouldAttack: 0
 --- !u!114 &1456067675321353006
 MonoBehaviour:
   m_ObjectHideFlags: 0

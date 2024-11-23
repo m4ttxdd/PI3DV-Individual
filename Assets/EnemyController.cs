@@ -32,6 +32,11 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         characterAttacks = GetComponent<CharacterAttacks>();
 
+        if(player == null)
+        {
+            player = Camera.main.transform.Find("PlayerMove");
+        }
+
         characterAttacks.swordCollider.gameObject.GetComponent<Sword>().OnBlock += Stunned; //idc
 
         StartCoroutine(StateChecker());
