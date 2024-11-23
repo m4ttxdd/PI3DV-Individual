@@ -1,32 +1,60 @@
 using StarterAssets;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CharacterAnimations : MonoBehaviour
 {
     public Animator animator;
     public FirstPersonController FPSController;
+    private NavMeshAgent agent;
 
     public float speedChangeRate = 0.05f;
 
-    public StarterAssets.StarterAssetsInputs inputs;
+    private float normalisedSpeed;
+
+    public bool isEnemy = false;
+
+    public void Start()
+    {
+        if (isEnemy)
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
+    }
 
     private void Update()
     {
-        if (inputs.attack)
-        {
-            animator.SetTrigger("attack");
-            inputs.attack = false;
-        }
-        else if (inputs.block)
-        {
-            animator.SetBool("block", true);
-            inputs.block = false;
-        }
+        normalisedSpeed = SetSpeed(isEnemy);
 
-            var targetSpeed = FPSController._speed / FPSController.SprintSpeed;
-        var speed = Mathf.MoveTowards(animator.GetFloat("speed"), targetSpeed, speedChangeRate);
+        var speed = Mathf.MoveTowards(animator.GetFloat("speed"), normalisedSpeed, speedChangeRate);
 
         animator.SetFloat("speed", speed);
     }
 
+    public float SetSpeed(bool isEnemy)
+    {
+        if (!isEnemy)
+        {
+            return FPSController._speed / FPSController.SprintSpeed;
+        }
+        else
+        {
+            return agent.velocity.magnitude / agent.speed;
+        }
+    }
+
+    public void Attack()
+    {
+        animator.SetTrigger("attack");
+    }
+
+    public void Block()
+    {
+        animator.SetTrigger("block");
+    }
+
+    public void GotBlocked()
+    {
+        animator.SetTrigger("gotBlocked");
+    }
 }
