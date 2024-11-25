@@ -18,7 +18,10 @@ public class Sword : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Pushable"))
         {
-            other.GetComponent<Rigidbody>().AddForce((direction?.forward ?? transform.forward) * 1000);
+            if(other.TryGetComponent(out Rigidbody rb))
+            {
+                rb.AddForce((direction?.forward ?? transform.forward) * 1000);
+            }
         }
 
         if (other.gameObject.TryGetComponent(out Shield shield))

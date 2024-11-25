@@ -64,6 +64,7 @@ public class EnemyController : MonoBehaviour
             {
                 characterAttacks.shouldAttack = true;
                 agent.SetDestination(transform.position);
+                FaceTarget();
             }
             else if (playerInSight)
             {
@@ -76,6 +77,17 @@ public class EnemyController : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    void FaceTarget()
+
+    {
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+
     }
 
     private IEnumerator CheckVision()
@@ -98,7 +110,7 @@ public class EnemyController : MonoBehaviour
             {
                 float distance = Vector3.Distance(transform.position, player.position);
 
-                if (!Physics.Raycast(transform.position, dirToTarget, distance, environment))
+                if (!Physics.Raycast(transform.position + Vector3.up * .7f, dirToTarget, distance, environment))
                 {
                     playerCurrentlyInSight = true;
                 }
