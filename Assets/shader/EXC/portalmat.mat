@@ -116,6 +116,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
+    - _emissionStrength: 1000
     - _noisescale: 28.6
     - _timescale: 0
     - _twirlstrenghthhth: 60.6
