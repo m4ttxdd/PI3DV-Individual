@@ -6,6 +6,8 @@ Student Number: 20234643
 
 Link to Project: [github.com/m4ttxdd/PI3DV-Individual](http://github.com/m4ttxdd/PI3DV-Individual) 
 
+Link to video: [youtube.com/watch?v=bOvEuCoBlu8](https://www.youtube.com/watch?v=bOvEuCoBlu8) 
+
 ## <a name="_6jey5cb9np0j"></a>Game idea and breakdown:
 The idea was to make a medieval sword fighting game like Mordhau, Chivalry, For Honor etc. Since I didn't want to focus too much on the combat system the combat is broken down into either attacks or blocks, which when performed at the right time stagger the opponent. The player moves using a CharacterController using WASD with attacks and blocks being mouse 1 and 2, and the enemies navigate a NavMesh. The game takes place on a set level and the goal is to reach the end portal by defeating or dodging the enemies.
 
