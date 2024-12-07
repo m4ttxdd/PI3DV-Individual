@@ -11,12 +11,12 @@ public class Sword : MonoBehaviour
 
     public event System.Action OnBlock;
 
-    private HashSet<Transform> hitOpponents = new HashSet<Transform>();
+    private HashSet<Transform> hitOpponents = new HashSet<Transform>(); //to make sure an attack can only damage a target once per attack
     private bool blocked = false;
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Pushable"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Pushable"))//if hit physics object push it
         {
             if(other.TryGetComponent(out Rigidbody rb))
             {
@@ -24,7 +24,7 @@ public class Sword : MonoBehaviour
             }
         }
 
-        if (other.gameObject.TryGetComponent(out Shield shield))
+        if (other.gameObject.TryGetComponent(out Shield shield))//if hit shield get stunned
         {
             if (shield.transform.root != transform.root)
             {
@@ -39,7 +39,7 @@ public class Sword : MonoBehaviour
             }
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer(targetLayer))
+        if (other.gameObject.layer == LayerMask.NameToLayer(targetLayer))//if hit target deal damage
         {
             if(hitOpponents.Contains(other.transform.root))
             {

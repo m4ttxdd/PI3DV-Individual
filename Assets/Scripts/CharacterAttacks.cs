@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// script responsible for attacks and timings, used for both enemy and player again, should probably be in different scripts but doesnt matter for this scale ig
+/// </summary>
 public class CharacterAttacks : MonoBehaviour
 {
     [Header("Player only")]
@@ -45,26 +47,29 @@ public class CharacterAttacks : MonoBehaviour
 
     private void PlayerUpdate()
     {
-        if (inputs.attack && canAttack)
+        //inputs.attack becomes true when attack button is clicked and will only be disabled after this method has run
+        //logic is happening through a huge if statement, but it works
+        
+        if (inputs.attack && canAttack)//if attack clicked and we can attack meaning no other attack is ongoing we attack
         {
-            sword.ClearHitOpponents();
+            sword.ClearHitOpponents();//clears the hashset used to make sure we dont hit the same opponent twice
             Attack();
             characterAnimations.Attack();
             inputs.attack = false;
-        }else if(inputs.block && !canAttack)//cancel atk with block
+        }else if(inputs.block && !canAttack)//cancel atk with block, for more reactive gameplay, the !canAttack is only true when attack is ongoing so yea
         {
             StopAttack();
             Block();
             characterAnimations.Block();
             inputs.block = false;
         }
-        else if (inputs.block && canBlock)
+        else if (inputs.block && canBlock)// block is clicked and we can block meaning no other block is ongoing we block
         {
             Block();
             characterAnimations.Block();
             inputs.block = false;
         }
-        else if (inputs.attack && !canAttack)
+        else if (inputs.attack && !canAttack)//you could remove these last two if statements and then the attack and blocks would have a semi queued system but i didnt like it
         {
             inputs.attack = false;
         }
@@ -76,7 +81,7 @@ public class CharacterAttacks : MonoBehaviour
 
     private void EnemyUpdate()
     {
-        if(shouldAttack && canAttack)
+        if(shouldAttack && canAttack)//just like the player attacks but shouldattack is set from EnemyController when player in attackrange
         {
             sword.ClearHitOpponents();
             Attack();
@@ -89,7 +94,7 @@ public class CharacterAttacks : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void Attack()//enable the collider for weapon and call a method to stop it and disable it after a time
     {
         swordCollider.enabled = true;
         canAttack = false;

@@ -3,6 +3,10 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// enemy controller
+/// </summary>
+
 public class EnemyController : MonoBehaviour
 {
     public float visionRange;
@@ -32,14 +36,14 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         characterAttacks = GetComponent<CharacterAttacks>();
 
-        if(player == null)
+        if(player == null)//make sure player is set
         {
             player = Camera.main.transform.Find("PlayerMove");
         }
 
-        characterAttacks.swordCollider.gameObject.GetComponent<Sword>().OnBlock += Stunned; //idc
+        characterAttacks.swordCollider.gameObject.GetComponent<Sword>().OnBlock += Stunned; //not clean but w/e subscribe to stunned when getting blocked
 
-        StartCoroutine(StateChecker());
+        StartCoroutine(StateChecker());//start the coroutines responsible for vision and action
         StartCoroutine(CheckVision());
     }
 
@@ -50,7 +54,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator StateChecker()
     {
-        while (true)
+        while (true)//every .1 second if not stunned go through the if statement and see what it should do
         {
             if(stunned)
             {
@@ -64,7 +68,7 @@ public class EnemyController : MonoBehaviour
             {
                 characterAttacks.shouldAttack = true;
                 agent.SetDestination(transform.position);
-                FaceTarget();
+                FaceTarget();//make the agent face the player slowly
             }
             else if (playerInSight)
             {
@@ -81,7 +85,7 @@ public class EnemyController : MonoBehaviour
 
     void FaceTarget()
 
-    {
+    {//not the best implementation since it only runs every .1 second but it works fine
         Vector3 direction = (player.transform.position - transform.position).normalized;
 
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -92,7 +96,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator CheckVision()
     {
-        while (true)
+        while (true)//check vision ever .1 sec
         {
             VisionCone();
             yield return new WaitForSeconds(0.1f);
@@ -103,28 +107,28 @@ public class EnemyController : MonoBehaviour
     {
         bool playerCurrentlyInSight = false;
 
-        if (Physics.CheckSphere(transform.position, visionRange, playerMask))
+        if (Physics.CheckSphere(transform.position, visionRange, playerMask))//check if player in vision range
         {
-            Vector3 dirToTarget = player.position - transform.position;
-            if (Vector3.Angle(transform.forward, dirToTarget) < visionAngle / 2)
+            Vector3 dirToTarget = player.position - transform.position;//find direction
+            if (Vector3.Angle(transform.forward, dirToTarget) < visionAngle / 2)//find if angle between forward and direction to player is less than vision angle / 2
             {
-                float distance = Vector3.Distance(transform.position, player.position);
+                float distance = Vector3.Distance(transform.position, player.position);//get distance
 
-                if (!Physics.Raycast(transform.position + Vector3.up * .7f, dirToTarget, distance, environment))
+                if (!Physics.Raycast(transform.position + Vector3.up * .7f, dirToTarget, distance, environment))//check if environment layers are in the way so it wont look through objects
                 {
                     playerCurrentlyInSight = true;
                 }
             }
         }
 
-        if (playerCurrentlyInSight)
+        if (playerCurrentlyInSight)//make the enemy keep chasing the player until is has not seen the player for 3 secons, so it will not come to a halt whenever a small object is between them
         {
             playerInSight = true;
             timeSinceLastSeen = 0f;
         }
         else
         {
-            timeSinceLastSeen += 0.1f; //increment by the wait time in CheckVision cba to do it better :):):)
+            timeSinceLastSeen += 0.1f; //increment by the wait time in CheckVision :):):)
             if (timeSinceLastSeen >= sightTimeout)
             {
                 playerInSight = false;

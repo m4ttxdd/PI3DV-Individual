@@ -33,7 +33,7 @@ public class Healthbar : MonoBehaviour
 
     private void Update()
     {
-        if(!isPlayer)
-        transform.LookAt(Camera.main.transform);
+        if(!isPlayer)//if its a enemy healthbar it should face the camera
+            transform.LookAt(Camera.main.transform);
     }
 }

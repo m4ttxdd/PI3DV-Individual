@@ -24,11 +24,13 @@ public class RagdollEnabler : MonoBehaviour
         originalLayer = gameObject.layer;
         pushLayer = LayerMask.NameToLayer("Pushable");
 
+        //cache all components we need to disable and enable
         rigidbodies = ragdollRoot.GetComponentsInChildren<Rigidbody>();
         colliders = ragdollRoot.GetComponentsInChildren<Collider>();
         characterJoints = ragdollRoot.GetComponentsInChildren<CharacterJoint>();
         animator = ragdollRoot.GetComponent<Animator>();
 
+        //create a phys mat for the ragdoll so it looks better
         physicsMaterial = new PhysicsMaterial
         {
             dynamicFriction = 0.5f,
@@ -57,7 +59,7 @@ public class RagdollEnabler : MonoBehaviour
         }
     }
 
-    public void EnableRagdoll()
+    public void EnableRagdoll()//enables and disables relevant components
     {
         animator.enabled = false;
 
@@ -97,11 +99,11 @@ public class RagdollEnabler : MonoBehaviour
 
         if(cameraRoot)
         {
-            cameraRoot.isRagdoll = true;
+            cameraRoot.isRagdoll = true;//will make camera fall as seen from first person
         }
     }
 
-    public void DisableRagdoll()
+    public void DisableRagdoll()//enables and disables relevant components
     {
         animator.enabled = true;
 

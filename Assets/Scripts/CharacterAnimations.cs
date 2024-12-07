@@ -1,7 +1,9 @@
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// setting animator values for characters
+/// </summary>
 public class CharacterAnimations : MonoBehaviour
 {
     public Animator animator;
@@ -16,7 +18,7 @@ public class CharacterAnimations : MonoBehaviour
 
     public void Start()
     {
-        if (isEnemy)
+        if (isEnemy)//i use same script for player and enemeis, but enemy need navmeshagent
         {
             agent = GetComponent<NavMeshAgent>();
         }
@@ -24,8 +26,9 @@ public class CharacterAnimations : MonoBehaviour
 
     private void Update()
     {
-        normalisedSpeed = SetSpeed(isEnemy);
+        normalisedSpeed = SetSpeed(isEnemy);//find the speed from 0 to 1 so it can be used for animtor cleanly
 
+        //change speed over time
         var speed = Mathf.MoveTowards(animator.GetFloat("speed"), normalisedSpeed, speedChangeRate);
 
         animator.SetFloat("speed", speed);

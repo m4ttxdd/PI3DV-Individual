@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    //ah gg yky
+    //ended up not beingh needed but its there as a check now :|
 }

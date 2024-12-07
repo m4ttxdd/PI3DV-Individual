@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// used for making the camera position be the right place but not the rotation since the pivot point it attached to the head and caused bobbing.
+/// </summary>
 public class CameraRoot : MonoBehaviour
 {
     public Transform root;

@@ -1,6 +1,8 @@
 using System.IO;
 using UnityEngine;
-
+/// <summary>
+/// general character script for handling health and death
+/// </summary>
 public abstract class Character : MonoBehaviour
 {
     public event System.Action TakeDamageEvent;
@@ -13,7 +15,7 @@ public abstract class Character : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
-        TakeDamageEvent?.Invoke();
+        TakeDamageEvent?.Invoke();//event used for updating healthbar
         if (health <= 0)
         {
             Die();
@@ -24,9 +26,9 @@ public abstract class Character : MonoBehaviour
     {
         if (dead) { return; }
 
-        OnDeath?.Invoke();
+        OnDeath?.Invoke();//event used for disabling healthbar
 
-        if (TryGetComponent(out RagdollEnabler ragdoll))
+        if (TryGetComponent(out RagdollEnabler ragdoll))//if the character has a ragdoll enable it
         {
             ragdoll.ToggleRagdoll();
         }
