@@ -1990,6 +1990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901cd4bd61a0b9b45b3ecef59070580f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
 --- !u!1 &5014604134345244055
 GameObject:
   m_ObjectHideFlags: 0
@@ -4228,8 +4229,10 @@ MonoBehaviour:
   canBlock: 1
   swordCollider: {fileID: 5473004648935216090}
   attackActiveTime: 1
+  attackDelayTime: 0.5
   canAttack: 1
   shouldAttack: 0
+  attackCooldown: 1
 --- !u!114 &341937157460381642
 MonoBehaviour:
   m_ObjectHideFlags: 0

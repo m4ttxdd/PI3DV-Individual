@@ -15,6 +15,7 @@ public class CharacterAttacks : MonoBehaviour
     public Collider swordCollider;
 
     public float attackActiveTime = 1f;
+    public float attackDelayTime = 0f;
 
     public bool canAttack = true;
 
@@ -26,6 +27,8 @@ public class CharacterAttacks : MonoBehaviour
     [Header("Enemy only")]
     public bool shouldAttack = false;
 
+    public float attackCooldown = .4f;
+    
     private void Start()
     {
         characterAnimations = GetComponent<CharacterAnimations>();
@@ -96,15 +99,41 @@ public class CharacterAttacks : MonoBehaviour
 
     private void Attack()//enable the collider for weapon and call a method to stop it and disable it after a time
     {
-        swordCollider.enabled = true;
+        if (attackDelayTime <= 0)
+        {
+            swordCollider.enabled = true;
+        }
+        else
+        {
+            Invoke(nameof(EnableSwordCollider), attackDelayTime);
+        }
+        
         canAttack = false;
         Invoke(nameof(StopAttack), attackActiveTime);
     }
 
-    private void StopAttack()
+    private void EnableSwordCollider()
+    {
+        swordCollider.enabled = true;
+    }
+
+    private void CanAttackCooldown()
     {
         canAttack = true;
+    }
+
+    private void StopAttack()
+    {
         swordCollider.enabled = false;
+
+        if (isEnemy)
+        {
+            Invoke(nameof(CanAttackCooldown), attackCooldown);
+        }
+        else//play no cooldown on attack
+        {
+            canAttack = true;
+        }
     }
 
     private void Block()
